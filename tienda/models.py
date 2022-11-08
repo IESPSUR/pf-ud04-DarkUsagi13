@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 
 # Create your models here.
 
@@ -7,10 +6,24 @@ from django.conf import settings
 class Marca(models.Model):
     nombre = models.CharField(max_length=255, primary_key=True)
 
+    def __str__(self):
+        return self.nombre
 
-class Product(models.Model):
-    modelo = models.ForeignKey('Marca', on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=200)
+
+class Producto(models.Model):
+    marca = models.ForeignKey('Marca', on_delete=models.CASCADE)
+    modelo = models.CharField(max_length=255)
+    nombre = models.CharField(max_length=255, primary_key=True)
     unidades = models.IntegerField(default=1)
     precio = models.FloatField(default=0)
     detalles = models.TextField(blank=True, max_length=255)
+
+    def __str__(self):
+        return self.nombre
+
+
+class Compra(models.Model):
+    nombre = models.ForeignKey('Producto', on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    unidades = models.IntegerField(default=1)
+    importe = models.FloatField(default=0)

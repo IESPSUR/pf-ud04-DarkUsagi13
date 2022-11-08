@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Productos</title>
+</head>
+<body>
+    {% for producto in productos %}
+        <ul>
+            <li>{{ producto.nombre }}</li>
+        </ul>
+    {% endfor %}
+
+    <a href="{% url 'NuevoProducto' %}"></a>
+</body>
+</html>
