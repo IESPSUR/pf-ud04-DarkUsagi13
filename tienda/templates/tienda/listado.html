@@ -9,8 +9,11 @@
         <ul>
             <li>{{ producto.nombre }}</li>
         </ul>
-    {% endfor %}
 
-    <a href="{% url 'NuevoProducto' %}"></a>
+        <a href="{% url 'eliminar_producto:nombre'  %}">Eliminar</a>
+    {% endfor %}
+    <br/>
+    <br/>
+    <a href="{% url 'nuevo_producto' %}">Nuevo producto</a>
 </body>
 </html>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Producto
 from .forms import ProductoForm
 # Create your views here.
@@ -13,12 +13,43 @@ def listado(request):
     return render(request, 'tienda/listado.html', {'productos': productos})
 
 
-def NuevoProducto(request):
-    context = {}
-    form = ProductoForm(request.POST)
-    if form.is_valid():
-        form.save()
-    context['form'] = form
-    return render(request, 'tienda/nuevoproducto.html', context)
+def nuevo_producto(request):
+    form = ProductoForm()
+    if request.method == 'POST':
+        form = ProductoForm(request.POST)
+        if form.is_valid():
+            producto = Producto()
+            producto.nombre = form.cleaned_data['nombre']
+            producto.modelo = form.cleaned_data['modelo']
+            producto.unidades = form.cleaned_data['unidades']
+            producto.precio = form.cleaned_data['precio']
+            producto.detalles = form.cleaned_data['detalles']
+            producto.marca = form.cleaned_data['marca']
+            form.save()
+        else:
+            print('Formulario no válido')
+    return render(request, 'tienda/nuevo_producto.html', {'form': form})
 
 
+def editar_producto(request, pk):
+    form = ProductoForm()
+    instance = get_object_or_404(Producto, pk=pk)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.nombre = form.cleaned_data['nombre']
+            form.modelo = form.cleaned_data['modelo']
+            form.unidades = form.cleaned_data['unidades']
+            form.precio = form.cleaned_data['precio']
+            form.detalles = form.cleaned_data['detalles']
+            form.marca = form.cleaned_data['marca']
+            form.save()
+        else:
+            print('Formulario no válido')
+    return render(request, 'tienda/nuevo_producto.html', {'form': form})
+
+
+def eliminar_producto(request, pk):
+    instance = get_object_or_404(Producto, pk=pk)
+    instance.delete()
+    return render(request, 'tienda/listado.html', {'instance': instance})

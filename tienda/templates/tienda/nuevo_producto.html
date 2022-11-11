@@ -6,8 +6,9 @@
 </head>
 <body>
     <form method="POST">
-        {% csrf_token %}
-        <input type="submit" value="Submit">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-primary my-4" type="submit">Submit</button>
     </form>
 </body>
 </html>

@@ -5,19 +5,10 @@ from .models import Producto, Marca
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = [
-            "marca",
-            "modelo",
-            "nombre",
-            "unidades",
-            "precio",
-            "detalles",
-        ]
+        fields = "__all__"
 
 
-class MarcaForm(forms.ModelForm):
+class EditarProductoForm(forms.ModelForm):
     class Meta:
-        model = Marca
-        fields = [
-            "nombre",
-        ]
+        model = Producto
+        fields = "__all__"
