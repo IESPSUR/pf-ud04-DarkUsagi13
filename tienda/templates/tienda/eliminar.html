@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Producto</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <h3>Eliminar producto: "{{ producto.nombre }}"</h3>
+        <input type="submit" value="SÍ">
+        <a href="{% url 'listado' %}">Regresar</a>
+    </form>
+</body>
+</html>

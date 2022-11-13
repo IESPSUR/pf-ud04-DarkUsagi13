@@ -32,10 +32,10 @@ def nuevo_producto(request):
 
 
 def editar_producto(request, pk):
-    form = ProductoForm()
-    instance = get_object_or_404(Producto, pk=pk)
+    producto = get_object_or_404(Producto, pk=pk)
+    form = ProductoForm(instance=producto)
     if request.method == 'POST':
-        form = ProductoForm(request.POST, instance=instance)
+        form = ProductoForm(request.POST)
         if form.is_valid():
             form.nombre = form.cleaned_data['nombre']
             form.modelo = form.cleaned_data['modelo']
@@ -50,6 +50,8 @@ def editar_producto(request, pk):
 
 
 def eliminar_producto(request, pk):
-    instance = get_object_or_404(Producto, pk=pk)
-    instance.delete()
-    return render(request, 'tienda/listado.html', {'instance': instance})
+    producto = get_object_or_404(Producto, pk=pk)
+    if request.method == 'POST':
+        producto.delete()
+        return redirect('listado')
+    return render(request, 'tienda/eliminar.html', {'producto': producto})

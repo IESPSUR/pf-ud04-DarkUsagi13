@@ -9,6 +9,7 @@
             {% csrf_token %}
             {{ form }}
             <button class="btn btn-primary my-4" type="submit">Submit</button>
+            <a href="{% url 'listado' %}">Regresar</a>
     </form>
 </body>
 </html>

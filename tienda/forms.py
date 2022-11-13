@@ -6,9 +6,3 @@ class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
         fields = "__all__"
-
-
-class EditarProductoForm(forms.ModelForm):
-    class Meta:
-        model = Producto
-        fields = "__all__"

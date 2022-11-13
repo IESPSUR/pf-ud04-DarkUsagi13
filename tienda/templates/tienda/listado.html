@@ -6,11 +6,31 @@
 </head>
 <body>
     {% for producto in productos %}
-        <ul>
-            <li>{{ producto.nombre }}</li>
-        </ul>
-
-        <a href="{% url 'eliminar_producto:nombre'  %}">Eliminar</a>
+        <h3>{{ producto.nombre }}</h3>
+        <table>
+            <tr>
+                <td>Modelo:</td>
+                <td>{{ producto.modelo }}</td>
+            </tr>
+            <tr>
+                <td>Marca:</td>
+                <td>{{ producto.marca }}</td>
+            </tr>
+            <tr>
+                <td>Unidades:</td>
+                <td>{{ producto.unidades }}</td>
+            </tr>
+            <tr>
+                <td>Precio:</td>
+                <td>{{ producto.precio }}</td>
+            </tr>
+            <tr>
+                <td>Detalles:</td>
+                <td>{{ producto.detalles }}</td>
+            </tr>
+        </table>
+        <a href="{% url 'editar_producto' producto.pk %}">Editar</a>
+        <a href="{% url 'eliminar_producto' producto.pk %}">Eliminar</a>
     {% endfor %}
     <br/>
     <br/>

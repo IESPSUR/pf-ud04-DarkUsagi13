@@ -12,9 +12,9 @@ class Marca(models.Model):
 
 class Producto(models.Model):
     marca = models.ForeignKey('Marca', on_delete=models.PROTECT)
-    modelo = models.CharField(max_length=255)
-    nombre = models.CharField(max_length=255, primary_key=True)
-    unidades = models.IntegerField(default=1)
+    nombre = models.CharField(max_length=255)
+    modelo = models.IntegerField(primary_key=True)
+    unidades = models.IntegerField(default=0)
     precio = models.FloatField(default=0)
     detalles = models.TextField(blank=True, max_length=255)
 
