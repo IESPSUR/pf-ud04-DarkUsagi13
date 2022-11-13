@@ -7,7 +7,7 @@
 <body>
     <form method="POST">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <input type="submit" value="Actualizar">
         <a href="{% url 'listado' %}">Regresar</a>
     </form>

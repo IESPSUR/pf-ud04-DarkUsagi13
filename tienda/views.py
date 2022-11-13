@@ -14,21 +14,12 @@ def listado(request):
 
 
 def nuevo_producto(request):
-    form = ProductoForm()
-    if request.method == 'POST':
-        form = ProductoForm(request.POST)
-        if form.is_valid():
-            producto = Producto()
-            producto.nombre = form.cleaned_data['nombre']
-            producto.modelo = form.cleaned_data['modelo']
-            producto.unidades = form.cleaned_data['unidades']
-            producto.precio = form.cleaned_data['precio']
-            producto.detalles = form.cleaned_data['detalles']
-            producto.marca = form.cleaned_data['marca']
-            form.save()
-        else:
-            print('Formulario no válido')
-    return render(request, 'tienda/nuevo_producto.html', {'form': form})
+    producto = {}
+    form = ProductoForm(request.POST)
+    if form.is_valid():
+        form.save()
+    producto['form'] = form
+    return render(request, 'tienda/nuevo_producto.html', producto)
 
 
 def editar_producto(request, pk):
