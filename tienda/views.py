@@ -15,7 +15,7 @@ def listado(request):
 
 def nuevo_producto(request):
     producto = {}
-    form = ProductoForm(request.POST)
+    form = ProductoForm(request.POST or None)
     if form.is_valid():
         form.save()
     producto['form'] = form
@@ -26,18 +26,12 @@ def editar_producto(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     form = ProductoForm(instance=producto)
     if request.method == 'POST':
-        form = ProductoForm(request.POST)
+        form = ProductoForm(request.POST, instance=producto)
         if form.is_valid():
-            form.nombre = form.cleaned_data['nombre']
-            form.modelo = form.cleaned_data['modelo']
-            form.unidades = form.cleaned_data['unidades']
-            form.precio = form.cleaned_data['precio']
-            form.detalles = form.cleaned_data['detalles']
-            form.marca = form.cleaned_data['marca']
             form.save()
-        else:
-            print('Formulario no válido')
-    return render(request, 'tienda/nuevo_producto.html', {'form': form})
+            return redirect('listado')
+    form = {'form': form}
+    return render(request, 'tienda/editar_producto.html', form)
 
 
 def eliminar_producto(request, pk):

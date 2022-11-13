@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Listado de Productos</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+
+{% block content %}
     {% for producto in productos %}
         <h3>{{ producto.nombre }}</h3>
         <table>
@@ -35,5 +31,4 @@
     <br/>
     <br/>
     <a href="{% url 'nuevo_producto' %}">Nuevo producto</a>
-</body>
-</html>
+{% endblock %}
