@@ -1,33 +1,12 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
-    {% for producto in productos %}
-        <h3>{{ producto.nombre }}</h3>
-        <table>
-            <tr>
-                <td>Modelo:</td>
-                <td>{{ producto.modelo }}</td>
-            </tr>
-            <tr>
-                <td>Marca:</td>
-                <td>{{ producto.marca }}</td>
-            </tr>
-            <tr>
-                <td>Unidades:</td>
-                <td>{{ producto.unidades }}</td>
-            </tr>
-            <tr>
-                <td>Precio:</td>
-                <td>{{ producto.precio }}</td>
-            </tr>
-            <tr>
-                <td>Detalles:</td>
-                <td>{{ producto.detalles }}</td>
-            </tr>
-        </table>
-        <a href="{% url 'checkout' producto.pk %}">Comprar</a>
-        <a href="{% url 'welcome' %}">Regresar</a>
+    {% for p in productos %}
+        <h3>{{ p.nombre }}</h3>
+        <a href="{% url 'checkout' p.pk %}">Comprar</a>
     {% endfor %}
+    <br />
+    <a href="{% url 'welcome' %}">Regresar</a>
     <br/>
     <br/>
 {% endblock %}

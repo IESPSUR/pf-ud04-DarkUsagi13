@@ -5,8 +5,17 @@
     <title>Compra</title>
 </head>
 <body>
+    <h1>Producto: {{ producto.nombre }}</h1>
+    <ul>
+        <li>Marca: {{ producto.marca }}</li>
+        <li>Modelo: {{ producto.modelo }}</li>
+        <li>Unidades: {{ producto.unidades }}</li>
+        <li>Precio unidad: {{ producto.precio }}</li>
+    </ul>
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form }}
+    <input type="submit" value="Comprar">
+    <a href="{% url 'listado_compra' %}">Regresar</a>
 </body>
 </html>
 
