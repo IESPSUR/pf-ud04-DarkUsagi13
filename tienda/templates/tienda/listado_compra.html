@@ -1,12 +1,16 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
+    <h1>Productos:</h1>
     {% for p in productos %}
-        <h3>{{ p.nombre }}</h3>
-        <a href="{% url 'checkout' p.pk %}">Comprar</a>
+        <table>
+            <tr>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.unidades }}</td>
+                <td><a href="{% url 'checkout' p.pk %}">Comprar</a></td>
+            </tr>
+        </table>
     {% endfor %}
     <br />
     <a href="{% url 'welcome' %}">Regresar</a>
-    <br/>
-    <br/>
 {% endblock %}

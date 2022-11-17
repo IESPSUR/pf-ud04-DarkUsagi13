@@ -12,9 +12,13 @@
         <li>Unidades: {{ producto.unidades }}</li>
         <li>Precio unidad: {{ producto.precio }}</li>
     </ul>
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Comprar">
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Comprar">
+    </form>
+
     <a href="{% url 'listado_compra' %}">Regresar</a>
 </body>
 </html>

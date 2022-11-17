@@ -1,5 +1,5 @@
 from django import forms
-from .models import Producto
+from .models import Producto, Marca
 
 
 class ProductoForm(forms.ModelForm):
@@ -9,4 +9,10 @@ class ProductoForm(forms.ModelForm):
 
 
 class CheckOutForm(forms.Form):
-    unidades = forms.FloatField(label='unidades')
+    unidades = forms.FloatField(label='Unidades')
+
+
+class MarcaForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = ('marca',)

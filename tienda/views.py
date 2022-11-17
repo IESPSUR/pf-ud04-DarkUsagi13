@@ -56,21 +56,17 @@ def checkout(request, pk):
     form = CheckOutForm()
     producto = Producto.objects.all()
     p = get_object_or_404(Producto, pk=pk)
-    validacion_p = True
+    valida_p = True
     if request.method == 'POST':
         form = CheckOutForm(request.POST)
         if form.is_valid():
-            unidades = form.cleaned_data['Unidades']
-            if request.user.is_authenticated:
-                user = request.user.id
-            else:
-                user = None
+            unidades = form.cleaned_data['unidades']
             if unidades > p.unidades:
-                validacion_p = False
+                valida_p = False
             else:
                 p.unidades = p.unidades - unidades
                 p.save()
-                Compra.objects.create(nombre=p.nombre, fecha=timezone.now(), unidades=p.unidades, importe=p.precio)
-                return render(request, 'tienda/compra.html', {'form': form, 'producto': p, 'pk': pk, 'validacion': validacion_p})
+#                Compra.objects.create(nombre=p.nombre, fecha=timezone.now(), unidades=p.unidades, importe=p.precio)
+                return redirect('listado_compra')
     else:
         return render(request, 'tienda/compra.html', {'form': form, 'producto': p, 'pk': pk})
