@@ -57,7 +57,6 @@ def listado_compra(request):
 
 def checkout(request, pk):
     form = CheckOutForm()
-    producto = Producto.objects.all()
     p = get_object_or_404(Producto, pk=pk)
     valida_p = True
     if request.method == 'POST':
@@ -80,6 +79,7 @@ def checkout(request, pk):
 
 
 def registrar_usuario(request):
+    #   contraseña: Django - 123
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
