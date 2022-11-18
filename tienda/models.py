@@ -1,4 +1,7 @@
+from django.conf import Settings, settings
 from django.db import models
+from django.utils import timezone
+
 
 # Create your models here.
 
@@ -23,7 +26,11 @@ class Producto(models.Model):
 
 
 class Compra(models.Model):
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     nombre = models.ForeignKey('Producto', on_delete=models.PROTECT)
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha = models.DateTimeField(default=timezone.now)
     unidades = models.IntegerField(default=1)
     importe = models.FloatField(default=0)
+
+    def __str__(self):
+        return self.nombre
