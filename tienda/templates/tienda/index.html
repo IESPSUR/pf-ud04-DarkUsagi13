@@ -4,7 +4,7 @@
     <h2>Bienvenido a la tienda virtual {% if user.is_authenticated %}{{ user }}{% endif %}</h2>
     <ul>
         <li><a href="{% url 'listado' %}">Gestión de productos</a></li>
-        <li>Informes</li>
+        <li><a href="{% url 'informes' %}">Informes</a></li>
         <li><a href="{% url 'listado_compra' %}">Realizar compra</a></li>
     </ul>
     {% if user.is_authenticated %}

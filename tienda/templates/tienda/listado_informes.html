@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe: Listado de productos</title>
+</head>
+<body>
+        {% for marca in marcas %}
+                <h2><a href="{% url 'marcas_productos' marca.nombre %}">{{ marca.nombre }}</a></h2>
+        {% endfor %}
+        <a href="{% url 'informes' %}">Regresar</a>
+</body>
+</html>

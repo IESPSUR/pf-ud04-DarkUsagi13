@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.db.models import Sum
 from django.utils import timezone
 
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Producto, Compra
+from .models import Producto, Compra, Marca
 from .forms import ProductoForm, CheckOutForm
 
 
@@ -58,7 +59,6 @@ def listado_compra(request):
 def checkout(request, pk):
     form = CheckOutForm()
     p = get_object_or_404(Producto, pk=pk)
-    valida_p = True
     if request.method == 'POST':
         form = CheckOutForm(request.POST)
         if form.is_valid():
@@ -114,3 +114,23 @@ def inicio_sesion(request):
 def cerrar_sesion(request):
     logout(request)
     return redirect('welcome')
+
+
+def informes(request):
+    return render(request, 'tienda/informes.html')
+
+
+def informe_marcas(request):
+    marcas = Marca.objects.all().values()
+    return render(request, 'tienda/listado_informes.html', {'marcas': marcas})
+
+
+def marcas_productos(request, nombre):
+    listado_productos = Producto.objects.filter(marca__nombre__icontains=nombre).values()
+    return render(request, 'tienda/informe_producto.html', {'listado_productos': listado_productos})
+
+
+def top_ten_productos(request):
+    productos = Compra.objects.values('nombre').annotate(u_vendidas=Sum('unidades')).order_by('-u_vendidas')[:10]
+    productos = list(productos)
+    return render(request, 'tienda/top_productos.html', {'productos': productos})
