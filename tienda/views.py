@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.utils import timezone
 
@@ -131,6 +132,21 @@ def marcas_productos(request, nombre):
 
 
 def top_ten_productos(request):
-    productos = Compra.objects.values('nombre').annotate(u_vendidas=Sum('unidades')).order_by('-u_vendidas')[:10]
-    productos = list(productos)
+    productos = Compra.objects.values('nombre__nombre').annotate(u_vendidas=Sum('unidades')).order_by('-u_vendidas')[:10]
     return render(request, 'tienda/top_productos.html', {'productos': productos})
+
+
+def lista_usuarios(request):
+    usuario = User.objects.all().values()
+    return render(request, 'tienda/lista_usuarios.html', {'usuarios': usuario})
+
+
+def compras_usuarios(request, usuario):
+    productos = Compra.objects.filter(usuario=usuario)
+    usuarios = User.objects.values('username').filter(id=usuario)
+    return render(request, 'tienda/compras_usuario.html', {'productos': productos, 'usuarios': usuarios})
+
+
+def top_ten_usuarios(request):
+    usuarios = User.objects.values('username').annotate(total_compras=Sum('compra__importe')).order_by('-total_compras')[:10]
+    return render(request, 'tienda/top_usuarios.html', {'usuarios': usuarios})
