@@ -2,17 +2,18 @@
 
 {% block content %}
     <h2>Bienvenido a la tienda virtual {% if user.is_authenticated %}{{ user }}{% endif %}</h2>
-    <ul>
-        <li><a href="{% url 'listado' %}">Gestión de productos</a></li>
-        <li><a href="{% url 'informes' %}">Informes</a></li>
-        <li><a href="{% url 'listado_compra' %}">Realizar compra</a></li>
+    <ul class="list-group">
+        <li class="list-group-item"><a class="list-group-item-action" href="{% url 'listado' %}">Gestión de productos</a></li>
+        <li class="list-group-item"><a class="list-group-item-action" href="{% url 'informes' %}">Informes</a></li>
+        <li class="list-group-item"><a class="list-group-item-action" href="{% url 'listado_compra' %}">Realizar compra</a></li>
     </ul>
     {% if user.is_authenticated %}
         <a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
     {% else %}
-        <a href="{% url 'registrar_usuario' %}">Registrarse</a>
         <br>
-        <a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
-        <br>
+        <div>
+            <a class="btn btn-primary" href="{% url 'registrar_usuario' %}">Registrarse</a>
+            <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
+        </div>
     {% endif %}
 {% endblock %}

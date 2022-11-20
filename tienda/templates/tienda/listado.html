@@ -2,8 +2,10 @@
 
 {% block content %}
     {% for producto in productos %}
-        <h3>{{ producto.nombre }}</h3>
-        <table>
+        <table class="table table-dark table-striped">
+            <tr>
+                <td colspan="2"><h3>{{ producto.nombre }}</h3></td>
+            </tr>
             <tr>
                 <td>Modelo:</td>
                 <td>{{ producto.modelo }}</td>
@@ -24,9 +26,13 @@
                 <td>Detalles:</td>
                 <td>{{ producto.detalles }}</td>
             </tr>
+            <tr>
+                <td colspan="2">
+                    <a class="btn btn-primary" href="{% url 'editar_producto' producto.pk %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'eliminar_producto' producto.pk %}">Eliminar</a>
+                </td>
+            </tr>
         </table>
-        <a href="{% url 'editar_producto' producto.pk %}">Editar</a>
-        <a href="{% url 'eliminar_producto' producto.pk %}">Eliminar</a>
     {% endfor %}
     <br/>
     <br/>

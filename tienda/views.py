@@ -48,6 +48,7 @@ def eliminar_producto(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     if request.method == 'POST':
         producto.delete()
+        messages.add_message(request, messages.INFO, "Producto eliminado correctamente")
         return redirect('listado')
     return render(request, 'tienda/eliminar.html', {'producto': producto})
 
