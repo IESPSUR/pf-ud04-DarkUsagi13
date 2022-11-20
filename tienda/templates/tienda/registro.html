@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+    {% load crispy_forms_tags %}
     <form method="POST">
-        <div class="mb-3">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Registrarse">
+            <input type="submit" value="Registrar">
             <a href="{% url 'welcome' %}">Regresar</a>
-        </div>
     </form>
-</body>
-</html>
+{% endblock %}

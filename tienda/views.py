@@ -89,7 +89,8 @@ def registrar_usuario(request):
             login(request, us)
             messages.add_message(request, messages.INFO, "Registro exitoso")
             return redirect('welcome')
-        messages.error(request, "Registro no válido")
+        else:
+            messages.error(request, "Registro no válido")
     form = UserCreationForm()
     return render(request, "tienda/registro.html", {"form": form})
 
