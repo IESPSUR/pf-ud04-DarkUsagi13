@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+{% block content %}
     {% for producto in productos %}
-        <ul>
-            <li>{{ producto.u_vendidas }}</li>
-            <li>{{ producto.nombre__nombre }}</li>
+        <ul class="list-group">
+            <li class="list-group-item">{{ forloop.counter }}. Producto: {{ producto.nombre__nombre }}</li>
+            <li class="list-group-item list-group-item-action list-group-item-secondary">Unidades vendidas: {{ producto.u_vendidas }}</li>
         </ul>
     {% endfor %}
-</body>
-</html>
+{% endblock %}

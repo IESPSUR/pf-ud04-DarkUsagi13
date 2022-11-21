@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Informes</title>
-</head>
-<body>
-    <ul>
-        <li><a href="{% url 'informe_marcas' %}">Productos por marca</a></li>
-        <li><a href="{% url 'top_ten_productos' %}">Top ten productos vendidos</a></li>
-        <li><a href="{% url 'lista_usuarios' %}">Compras de usuario</a></li>
-        <li><a href="{% url 'top_ten_usuarios' %}">Top ten usuarios</a></li>
+{% extends 'tienda/base.html' %}
+{% block content %}
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{% url 'informe_marcas' %}">Productos por marca</a></li>
+        <li class="list-group-item"><a href="{% url 'top_ten_productos' %}">Top ten productos vendidos</a></li>
+        <li class="list-group-item"><a href="{% url 'lista_usuarios' %}">Compras de usuario</a></li>
+        <li class="list-group-item"><a href="{% url 'top_ten_usuarios' %}">Top ten usuarios</a></li>
     </ul>
-    <a href="{% url 'welcome' %}">Regresar</a>
-</body>
-</html>
+    <a class="btn btn-primary" href="{% url 'welcome' %}">Regresar</a>
+{% endblock %}

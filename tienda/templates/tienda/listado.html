@@ -1,41 +1,27 @@
 {% extends 'tienda/base.html' %}
-
 {% block content %}
+    <a class="btn btn-success" href="{% url 'nuevo_producto' %}">Nuevo producto</a>
+    <a class="btn btn-primary" href="{% url 'welcome' %}">Regresar</a>
+    <br>
+    <br>
+    <table class="table-secondary table">
     {% for producto in productos %}
-        <table class="table table-dark table-striped">
-            <tr>
-                <td colspan="2"><h3>{{ producto.nombre }}</h3></td>
-            </tr>
-            <tr>
-                <td>Modelo:</td>
-                <td>{{ producto.modelo }}</td>
-            </tr>
-            <tr>
-                <td>Marca:</td>
-                <td>{{ producto.marca }}</td>
-            </tr>
-            <tr>
-                <td>Unidades:</td>
-                <td>{{ producto.unidades }}</td>
-            </tr>
-            <tr>
-                <td>Precio:</td>
-                <td>{{ producto.precio }}</td>
-            </tr>
-            <tr>
-                <td>Detalles:</td>
-                <td>{{ producto.detalles }}</td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <a class="btn btn-primary" href="{% url 'editar_producto' producto.pk %}">Editar</a>
-                    <a class="btn btn-danger" href="{% url 'eliminar_producto' producto.pk %}">Eliminar</a>
-                </td>
-            </tr>
-        </table>
+        <tr>
+            <td colspan="2"><h4>{{ producto.nombre }}</h4></td>
+            <td>Modelo:</td>
+            <td>{{ producto.modelo }}</td>
+            <td>Marca:</td>
+            <td>{{ producto.marca }}</td>
+            <td>Unidades:</td>
+            <td>{{ producto.unidades }}</td>
+            <td>Precio:</td>
+            <td>{{ producto.precio }}</td>
+            <td>Detalles:</td>
+            <td>{{ producto.detalles }}</td>
+            <td colspan="2">
+                <a class="btn btn-primary" href="{% url 'editar_producto' producto.pk %}">Editar</a>
+                <a class="btn btn-danger" href="{% url 'eliminar_producto' producto.pk %}">Eliminar</a>
+            </td>
     {% endfor %}
-    <br/>
-    <br/>
-    <a href="{% url 'nuevo_producto' %}">Nuevo producto</a>
-    <a href="{% url 'welcome' %}">Regresar</a>
+    </table>
 {% endblock %}

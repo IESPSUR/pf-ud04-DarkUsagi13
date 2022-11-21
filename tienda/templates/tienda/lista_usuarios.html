@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de usuarios</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+{% block content %}
     {% for user in usuarios %}
         <h2><a href="{% url 'compras_usuarios' user.id %}">{{ user.username }}</a></h2>
     {% endfor %}
-</body>
-</html>
+{% endblock %}

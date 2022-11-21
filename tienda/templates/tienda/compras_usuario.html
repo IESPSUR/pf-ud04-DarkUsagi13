@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+{% block content %}
     {% for user in usuarios %}
-        <h3>{{ user.username }}</h3>
+        <h3>Compras de: {{ user.username }}</h3>
     {% endfor %}
     {% for producto in productos %}
-        <ul>
-            <li>Producto: {{ producto.nombre }}</li>
-            <li>Unidades: {{ producto.unidades }}</li>
-            <li>Importe: {{ producto.importe }}</li>
-            <li>Fecha de la compra: {{ producto.fecha }}</li>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-primary">Producto: {{ producto.nombre }}</li>
+            <li class="list-group-item list-group-item-secondary">Unidades: {{ producto.unidades }}</li>
+            <li class="list-group-item list-group-item-secondary">Importe: {{ producto.importe }}</li>
+            <li class="list-group-item list-group-item-secondary">Fecha de la compra: {{ producto.fecha }}</li>
         </ul>
     {% endfor %}
-</body>
-</html>
+{% endblock %}

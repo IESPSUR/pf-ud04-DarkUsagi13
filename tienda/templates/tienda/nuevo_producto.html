@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Nuevo Producto</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
     <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
-            <a href="{% url 'listado' %}">Regresar</a>
+            {{ form|crispy }}
+            <button class="btn btn-primary" type="submit">Crear entrada</button>
+            <a class="btn btn-primary" href="{% url 'listado' %}">Regresar</a>
     </form>
-</body>
-</html>
+{% endblock %}

@@ -28,6 +28,7 @@ def nuevo_producto(request):
     form = ProductoForm(request.POST or None)
     if form.is_valid():
         form.save()
+        messages.add_message(request, messages.INFO, "Registro creado")
     producto['form'] = form
     return render(request, 'tienda/nuevo_producto.html', producto)
 
@@ -39,6 +40,7 @@ def editar_producto(request, pk):
         form = ProductoForm(request.POST, instance=producto)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.INFO, "Registro editado")
             return redirect('listado')
     form = {'form': form}
     return render(request, 'tienda/editar_producto.html', form)
@@ -60,7 +62,7 @@ def listado_compra(request):
 
 def checkout(request, pk):
     form = CheckOutForm()
-    p = get_object_or_404(Producto, pk=pk)
+    producto = get_object_or_404(Producto, pk=pk)
     if request.method == 'POST':
         form = CheckOutForm(request.POST)
         if form.is_valid():
@@ -69,15 +71,13 @@ def checkout(request, pk):
                 user = request.user.id
             else:
                 user = None
-            if unidades > p.unidades:
-                valida_p = False
-            else:
-                p.unidades = p.unidades - unidades
-                p.save()
-                Compra.objects.create(usuario_id=user, nombre=p, fecha=timezone.now(), unidades=unidades, importe=p.precio * unidades)
-                return redirect('listado_compra')
+            producto.unidades = producto.unidades - unidades
+            producto.save()
+            Compra.objects.create(usuario_id=user, nombre=producto, fecha=timezone.now(), unidades=unidades, importe=producto.precio * unidades)
+            messages.add_message(request, messages.INFO, "Compra realizada")
+            return redirect('listado_compra')
     else:
-        return render(request, 'tienda/compra.html', {'form': form, 'producto': p, 'pk': pk})
+        return render(request, 'tienda/compra.html', {'form': form, 'producto': producto, 'pk': pk})
 
 
 def registrar_usuario(request):
@@ -104,7 +104,7 @@ def inicio_sesion(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
+                messages.add_message(request, messages.INFO, f"Has iniciado sesión como {username}")
                 return redirect('welcome')
             else:
                 messages.error(request, f"Invalid username or password")
@@ -116,6 +116,7 @@ def inicio_sesion(request):
 
 def cerrar_sesion(request):
     logout(request)
+    messages.add_message(request, messages.INFO, f"Has cerrado sesión")
     return redirect('welcome')
 
 
@@ -134,8 +135,9 @@ def marcas_productos(request, nombre):
 
 
 def top_ten_productos(request):
+    id_producto = Producto.objects.all()
     productos = Compra.objects.values('nombre__nombre').annotate(u_vendidas=Sum('unidades')).order_by('-u_vendidas')[:10]
-    return render(request, 'tienda/top_productos.html', {'productos': productos})
+    return render(request, 'tienda/top_productos.html', {'productos': productos, 'id_producto': id_producto})
 
 
 def lista_usuarios(request):

@@ -1,7 +1,10 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
-    <h2>Bienvenido a la tienda virtual {% if user.is_authenticated %}{{ user }}{% endif %}</h2>
+    <h2>Bienvenido a la tienda virtual</h2>
+    {% if user.is_authenticated %}
+        <h3>Sesión iniciada: {{ user }}</h3>
+    {% endif %}
     <ul class="list-group">
         <li class="list-group-item"><a class="list-group-item-action" href="{% url 'listado' %}">Gestión de productos</a></li>
         <li class="list-group-item"><a class="list-group-item-action" href="{% url 'informes' %}">Informes</a></li>
