@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.db import transaction
 from django.db.models import Sum
 from django.utils import timezone
 
@@ -60,6 +61,7 @@ def listado_compra(request):
     return render(request, 'tienda/listado_compra.html', {'productos': productos})
 
 
+@transaction.atomic
 def checkout(request, pk):
     form = CheckOutForm()
     producto = get_object_or_404(Producto, pk=pk)
@@ -73,7 +75,8 @@ def checkout(request, pk):
                 user = None
             producto.unidades = producto.unidades - unidades
             producto.save()
-            Compra.objects.create(usuario_id=user, nombre=producto, fecha=timezone.now(), unidades=unidades, importe=producto.precio * unidades)
+            Compra.objects.create(usuario_id=user, nombre=producto, fecha=timezone.now(), unidades=unidades,
+                                  importe=producto.precio * unidades)
             messages.add_message(request, messages.INFO, "Compra realizada")
             return redirect('listado_compra')
     else:
@@ -81,7 +84,6 @@ def checkout(request, pk):
 
 
 def registrar_usuario(request):
-    #   contraseña: Django - 123
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
