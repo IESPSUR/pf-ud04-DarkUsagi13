@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
+from tienda.models import Producto, Marca
+
 
 # Create your tests here.
 
@@ -13,6 +15,11 @@ class TestViewLogin(TestCase):
             'username': 'user_test',
             'password': 'Django-123',
         }
+        self.marca = Marca.objects.create(nombre="Adidas")
+        self.producto = Producto.objects.create(
+            marca=self.marca, nombre="Force", modelo="1", unidades="50", precio="100", detalles=""
+        )
+        self.checkout_url = reverse('checkout', kwargs={"pk": self.producto.pk})
         return super().setUp()
 
     def test_register(self):
@@ -32,3 +39,10 @@ class TestViewLogin(TestCase):
         user.save()
         response = self.client.post(self.login_url,self.user,format='text/html')
         self.assertEqual(response.status_code, 302)
+
+    def test_checkout_success(self):
+        response = self.client.get(self.checkout_url)
+        listado = reverse('listado_compra')
+        self.assertContains(response, 'href="{0}"'.format(listado))
+        self.assertTemplateUsed(response,'tienda/compra.html')
+
